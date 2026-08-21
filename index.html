@@ -1,1371 +1,2070 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Abhishek Prajapati — Flutter Developer</title>
-<meta name="description" content="Portfolio of Abhishek Prajapati — Jr. Flutter Developer building mobile applications." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abhishek Prajapati — Flutter & Mobile Developer</title>
+  <meta name="description"
+    content="Portfolio of Abhishek Prajapati — Flutter Developer specializing in high-performance cross-platform mobile apps for Android & iOS." />
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://img.icons8.com/color/48/flutter.png" />
 
-<style>
-:root{
-  --bg: #0a0a0a;
-  --bg-2: #131311;
-  --ink: #efeae0;
-  --ink-soft: #a09c92;
-  --accent: #ff5722;
-  --accent-2: #e8d8a8;
-  --line: rgba(239,234,224,.12);
-}
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
-*{margin:0;padding:0;box-sizing:border-box}
+  <style>
+    :root {
+      --bg-dark: #07090e;
+      --bg-card: rgba(14, 20, 32, 0.75);
+      --bg-card-hover: rgba(20, 30, 48, 0.85);
+      --bg-pill: rgba(0, 210, 255, 0.08);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(0, 210, 255, 0.4);
+      --primary: #00d2ff;
+      --primary-glow: rgba(0, 210, 255, 0.25);
+      --flutter-blue: #02569B;
+      --flutter-cyan: #0175C2;
+      --accent: #3a86ff;
+      --accent-purple: #8338ec;
+      --accent-green: #10b981;
+      --text-main: #f3f6fc;
+      --text-muted: #8e9bb2;
+      --text-dim: #5c687e;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+      --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-html{scroll-behavior:smooth}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-html, body{
-  background: var(--bg);
-  color: var(--ink);
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: 17px;
-  line-height: 1.55;
-  overflow-x: hidden;
-  cursor: none;
-  -webkit-font-smoothing: antialiased;
-}
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
 
-@media (pointer: coarse){
-  html, body, a, button{cursor: auto}
-}
+    body {
+      overflow-x: hidden;
+      position: relative;
+      background: radial-gradient(circle at 50% 0%, #0d192f 0%, #07090e 70%);
+      min-height: 100vh;
+    }
 
-::selection{background: var(--accent); color: var(--ink)}
+    ::selection {
+      background: var(--primary);
+      color: #000;
+    }
 
-.mono{
-  font-family:'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-}
+    /* Ambient background grid & glow */
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        radial-gradient(rgba(0, 210, 255, 0.07) 1px, transparent 1px),
+        radial-gradient(at 10% 20%, rgba(58, 134, 255, 0.12) 0px, transparent 50%),
+        radial-gradient(at 90% 80%, rgba(131, 56, 236, 0.08) 0px, transparent 50%);
+      background-size: 32px 32px, 100% 100%, 100% 100%;
+      opacity: 0.8;
+    }
 
-img{max-width:100%; display:block}
+    /* ========================================================
+       FIRST-TIME ENTRANCE LOADER (SMOOTH & CLEAN)
+       ======================================================== */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: #07090e;
+      z-index: 999999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-/* CUSTOM CURSOR */
-.cursor-dot, .cursor-ring{
-  position: fixed;
-  top: 0; left: 0;
-  pointer-events: none;
-  z-index: 9999;
-  border-radius: 50%;
-  transform: translate(-50%,-50%);
-}
-.cursor-dot{
-  width: 6px; height: 6px;
-  background: var(--accent);
-  transition: width .3s, height .3s, background .3s;
-}
-.cursor-ring{
-  width: 36px; height: 36px;
-  border: 1px solid var(--ink);
-  transition: width .3s, height .3s, border-color .3s, background .3s;
-  mix-blend-mode: difference;
-}
-.cursor-ring.hover{
-  width: 80px; height: 80px;
-  background: var(--ink);
-  border-color: var(--ink);
-}
-.cursor-dot.hover{ width: 0; height: 0; }
-@media (pointer: coarse){
-  .cursor-dot, .cursor-ring{display:none}
-}
+    #loader.done {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
 
-/* LOADER */
-#loader{
-  position: fixed;
-  inset: 0;
-  background: var(--bg);
-  z-index: 10000;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  transition: opacity .8s ease, visibility .8s ease;
-}
-#loader.done{opacity: 0; visibility: hidden}
+    .loader-brand-icon {
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: scale(0.8);
+      animation: fadeInScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
 
-.loader-name{
-  font-family: 'Instrument Serif', serif;
-  font-size: clamp(32px, 6vw, 72px);
-  font-style: italic;
-  line-height: 1;
-  overflow: hidden;
-  margin-bottom: 14px;
-  text-align: center;
-  padding: 0 20px;
-}
-.loader-name span{
-  display: inline-block;
-  transform: translateY(110%);
-  animation: rise .9s cubic-bezier(.2,.9,.2,1) forwards;
-}
-.loader-name span:nth-child(1){animation-delay: .00s}
-.loader-name span:nth-child(2){animation-delay: .12s}
+    .loader-brand-icon svg {
+      width: 48px;
+      height: 48px;
+      filter: drop-shadow(0 0 16px rgba(0, 210, 255, 0.4));
+    }
 
-.loader-sub{
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  letter-spacing: .25em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  margin-bottom: 36px;
-  overflow: hidden;
-}
-.loader-sub span{
-  display: inline-block;
-  transform: translateY(110%);
-  animation: rise .9s cubic-bezier(.2,.9,.2,1) forwards;
-  animation-delay: .3s;
-}
-@keyframes rise{to{transform: translateY(0)}}
+    .loader-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(32px, 6vw, 68px);
+      font-weight: 800;
+      line-height: 1.1;
+      overflow: hidden;
+      margin-bottom: 10px;
+      text-align: center;
+      padding: 0 20px;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
 
-.loader-bar{
-  width: min(420px, 70vw);
-  height: 1px;
-  background: rgba(239,234,224,.12);
-  overflow: hidden;
-  position: relative;
-}
-.loader-bar::after{
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  animation: fill 1.6s cubic-bezier(.6,.05,.3,1) forwards .3s;
-}
-@keyframes fill{to{transform: scaleX(1)}}
+    .loader-name span {
+      display: inline-block;
+      transform: translateY(115%);
+      animation: rise 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
 
-.loader-meta{
-  position: absolute;
-  bottom: 32px;
-  left: 32px;
-  color: var(--ink-soft);
-  opacity: 0;
-  animation: fadein .8s ease forwards .8s;
-}
-.loader-pct{
-  position: absolute;
-  bottom: 32px;
-  right: 32px;
-  color: var(--ink-soft);
-  opacity: 0;
-  animation: fadein .8s ease forwards .8s;
-}
-@keyframes fadein{to{opacity: 1}}
+    .loader-name span:nth-child(1) {
+      animation-delay: 0.05s;
+    }
 
-/* NAV */
-nav.top{
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 50;
-  padding: 22px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  mix-blend-mode: difference;
-}
-nav.top .brand{
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-size: 22px;
-  color: var(--ink);
-  text-decoration: none;
-}
-nav.top .links{
-  display: flex;
-  gap: 32px;
-}
-nav.top a{
-  color: var(--ink);
-  text-decoration: none;
-  position: relative;
-}
-nav.top a::after{
-  content: "";
-  position: absolute;
-  bottom: -4px; left: 0; right: 0;
-  height: 1px;
-  background: var(--ink);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform .4s cubic-bezier(.7,0,.3,1);
-}
-nav.top a:hover::after{transform: scaleX(1); transform-origin: left}
+    .loader-name span:nth-child(2) {
+      animation-delay: 0.18s;
+    }
 
-@media (max-width: 700px){
-  nav.top{padding: 18px 20px}
-  nav.top .links{gap: 18px}
-}
+    .loader-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(12px, 1.6vw, 16px);
+      color: var(--primary);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      overflow: hidden;
+      margin-bottom: 36px;
+    }
 
-/* HERO */
-.hero{
-  position: relative;
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    .loader-sub span {
+      display: inline-block;
+      transform: translateY(115%);
+      animation: rise 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    }
 
-#canvas-hero{
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
+    @keyframes rise {
+      to {
+        transform: translateY(0);
+      }
+    }
 
-.hero-content{
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  pointer-events: none;
-  padding: 0 24px;
-}
+    @keyframes fadeInScale {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
 
-.hero-tag{
-  color: var(--ink-soft);
-  margin-bottom: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-}
-.hero-tag .pulse{
-  display: inline-block;
-  width: 6px; height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-  animation: pulse 1.6s ease-in-out infinite;
-}
-@keyframes pulse{
-  0%, 100%{opacity:1; box-shadow: 0 0 0 0 rgba(255,87,34,.6)}
-  50%{opacity: .8; box-shadow: 0 0 0 10px rgba(255,87,34,0)}
-}
+    .loader-bar-wrap {
+      width: min(280px, 75vw);
+      height: 3px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      position: relative;
+    }
 
-.hero h1{
-  font-family: 'Fraunces', serif;
-  font-weight: 300;
-  font-size: clamp(58px, 13vw, 200px);
-  line-height: .88;
-  letter-spacing: -.04em;
-  font-variation-settings: "opsz" 144;
-}
-.hero h1 .italic{
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-weight: 400;
-  color: var(--accent);
-}
-.hero h1 .line{
-  display: block;
-  overflow: hidden;
-}
-.hero h1 .line > span{
-  display: inline-block;
-  transform: translateY(110%);
-  animation: rise 1.1s cubic-bezier(.2,.9,.2,1) forwards;
-  animation-delay: 2.4s;
-}
-.hero h1 .line:nth-child(2) > span{animation-delay: 2.55s}
-.hero h1 .line:nth-child(3) > span{animation-delay: 2.7s}
+    .loader-bar-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0%;
+      background: linear-gradient(90deg, #00d2ff, #0077ff);
+      box-shadow: 0 0 12px var(--primary);
+      transition: width 0.08s ease-out;
+      border-radius: 4px;
+    }
 
-.hero-foot{
-  position: absolute;
-  bottom: 32px;
-  left: 0; right: 0;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 40px;
-  color: var(--ink-soft);
-  z-index: 2;
-  opacity: 0;
-  animation: fadein .8s ease forwards 3.4s;
-}
-.scroll-cue{
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.scroll-cue .arrow{
-  display: inline-block;
-  width: 1px; height: 28px;
-  background: var(--ink);
-  position: relative;
-  overflow: hidden;
-}
-.scroll-cue .arrow::after{
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 50%;
-  background: var(--accent);
-  animation: drop 1.8s ease-in-out infinite;
-}
-@keyframes drop{
-  0%{transform: translateY(-100%)}
-  100%{transform: translateY(200%)}
-}
+    .loader-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--text-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
 
-@media (max-width: 700px){
-  .hero-foot{padding: 0 20px; font-size: 10px; bottom: 20px}
-}
+    .loader-pct {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--primary);
+      letter-spacing: 0.1em;
+      font-weight: 600;
+    }
 
-/* SECTIONS */
-section{
-  position: relative;
-  padding: 140px 40px;
-  z-index: 2;
-}
-@media (max-width: 700px){
-  section{padding: 80px 20px}
-}
+    /* Custom smooth cursor */
+    .cursor-dot,
+    .cursor-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 99999;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease;
+    }
 
-.section-head{
-  display: grid;
-  grid-template-columns: 80px 1fr;
-  gap: 24px;
-  margin-bottom: 80px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid var(--line);
-}
-.section-no{
-  color: var(--accent);
-  padding-top: 8px;
-}
-.section-title{
-  font-family: 'Fraunces', serif;
-  font-weight: 300;
-  font-size: clamp(40px, 6vw, 88px);
-  line-height: .95;
-  letter-spacing: -.02em;
-}
-.section-title em{
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-weight: 400;
-  color: var(--accent);
-}
+    .cursor-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--primary);
+      box-shadow: 0 0 10px var(--primary);
+    }
 
-@media (max-width: 700px){
-  .section-head{grid-template-columns: 1fr; margin-bottom: 50px}
-}
+    .cursor-ring {
+      width: 32px;
+      height: 32px;
+      border: 1.5px solid rgba(0, 210, 255, 0.4);
+      transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, transform 0.08s linear;
+    }
 
-.split{
-  overflow: hidden;
-  display: block;
-}
-.split > span{
-  display: inline-block;
-  transform: translateY(110%);
-  transition: transform 1s cubic-bezier(.2,.9,.2,1);
-}
-.section-title.in .split > span{transform: translateY(0)}
-.section-title.in .split:nth-child(2) > span{transition-delay: .1s}
-.section-title.in .split:nth-child(3) > span{transition-delay: .2s}
+    .cursor-ring.hovered {
+      width: 54px;
+      height: 54px;
+      background: rgba(0, 210, 255, 0.08);
+      border-color: var(--primary);
+    }
 
-/* ABOUT */
-.about{ background: var(--bg); }
-.about-grid{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 100px;
-  align-items: start;
-}
-.about-prose p{
-  font-size: clamp(20px, 2.2vw, 28px);
-  line-height: 1.45;
-  margin-bottom: 24px;
-  font-weight: 300;
-}
-.about-prose p em{
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  color: var(--accent);
-}
+    @media (pointer: coarse) {
 
-.about-side{
-  position: sticky;
-  top: 100px;
-  border-left: 1px solid var(--line);
-  padding-left: 32px;
-}
-.about-side .label{
-  color: var(--ink-soft);
-  margin-bottom: 12px;
-}
-.about-side dl{
-  display: grid;
-  gap: 24px;
-}
-.about-side dt{
-  color: var(--ink-soft);
-  font-family:'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-.about-side dd{
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-size: 26px;
-  line-height: 1.1;
-}
+      .cursor-dot,
+      .cursor-ring {
+        display: none !important;
+      }
+    }
 
-@media (max-width: 900px){
-  .about-grid{grid-template-columns: 1fr; gap: 50px}
-  .about-side{position: static; padding-left: 18px}
-}
+    /* Typography helpers */
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
 
-/* MARQUEE */
-.strip{
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  padding: 28px 0;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.strip-track{
-  display: inline-block;
-  animation: scroll 40s linear infinite;
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-size: clamp(40px, 7vw, 88px);
-  line-height: 1;
-}
-.strip-track span{margin: 0 36px}
-.strip-track .dot{color: var(--accent); vertical-align: super; font-size: .5em}
-@keyframes scroll{
-  0%{transform: translateX(0)}
-  100%{transform: translateX(-50%)}
-}
+    .font-heading {
+      font-family: 'Outfit', sans-serif;
+    }
 
-/* WORK */
-.work{
-  background: var(--bg-2);
-  border-top: 1px solid var(--line);
-}
+    /* Navigation */
+    nav.navbar {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(92%, 1100px);
+      z-index: 1000;
+      background: rgba(10, 15, 26, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: var(--transition-smooth);
+    }
 
-.project{
-  display: grid;
-  grid-template-columns: 80px 1fr 1fr;
-  gap: 40px;
-  padding: 60px 0;
-  border-top: 1px solid var(--line);
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  transition: padding .5s cubic-bezier(.7,0,.3,1);
-}
-.project:last-child{border-bottom: 1px solid var(--line)}
+    nav.navbar:hover {
+      border-color: rgba(0, 210, 255, 0.2);
+    }
 
-.project::before{
-  content: "";
-  position: absolute;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
-  background: var(--accent);
-  transform: scaleY(0);
-  transform-origin: bottom;
-  transition: transform .6s cubic-bezier(.7,0,.3,1);
-  z-index: 0;
-}
-.project:hover::before{
-  transform: scaleY(1);
-  transform-origin: top;
-}
-.project:hover{padding-left: 32px}
-.project:hover *{color: var(--bg) !important}
-.project:hover .tag{border-color: var(--bg); background: transparent}
-.project > *{position: relative; z-index: 1; transition: color .4s}
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.01em;
+    }
 
-.project-num{
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: var(--ink-soft);
-  letter-spacing: .12em;
-}
+    .brand-logo .flutter-icon {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(0, 210, 255, 0.45));
+      flex-shrink: 0;
+    }
 
-.project-title{
-  font-family: 'Fraunces', serif;
-  font-weight: 300;
-  font-size: clamp(32px, 4.5vw, 64px);
-  line-height: .98;
-  letter-spacing: -.02em;
-}
-.project-title em{
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  color: var(--accent);
-  transition: color .4s;
-}
+    .brand-name {
+      font-family: 'Outfit', sans-serif;
+    }
 
-.project-info{
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.project-desc{
-  font-size: 15px;
-  line-height: 1.55;
-  color: var(--ink-soft);
-}
-.tags{
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-.tag{
-  display: inline-block;
-  padding: 5px 12px;
-  border: 1px solid var(--line);
-  border-radius: 99px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
 
-@media (max-width: 900px){
-  .project{grid-template-columns: 1fr; gap: 14px; padding: 32px 0}
-  .project:hover{padding-left: 0}
-}
+    .nav-link {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: var(--transition-smooth);
+      position: relative;
+      padding: 4px 0;
+    }
 
-/* EXPERIENCE */
-.exp{background: var(--bg)}
-.exp-grid{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-}
-.exp-card{
-  border-top: 1px solid var(--accent);
-  padding-top: 32px;
-  position: relative;
-  transition: transform .5s cubic-bezier(.7,0,.3,1);
-}
-.exp-card:hover{transform: translateY(-8px)}
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--primary);
+    }
 
-.exp-when{
-  display: flex;
-  justify-content: space-between;
-  color: var(--ink-soft);
-  margin-bottom: 22px;
-}
-.exp-when .badge{
-  background: var(--accent);
-  color: var(--bg);
-  padding: 3px 10px;
-}
-.exp-when .badge.alt{background: var(--ink); color: var(--bg)}
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: var(--transition-smooth);
+    }
 
-.exp-role{
-  font-family: 'Fraunces', serif;
-  font-weight: 300;
-  font-size: clamp(28px, 3.5vw, 44px);
-  line-height: 1;
-  margin-bottom: 8px;
-  letter-spacing: -.01em;
-}
-.exp-co{
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  color: var(--accent);
-  font-size: 22px;
-  margin-bottom: 24px;
-}
-.exp-card ul{
-  list-style: none;
-}
-.exp-card li{
-  padding: 14px 0 14px 24px;
-  border-top: 1px dashed var(--line);
-  position: relative;
-  font-size: 15px;
-  line-height: 1.55;
-  color: var(--ink-soft);
-}
-.exp-card li::before{
-  content: "→";
-  position: absolute;
-  left: 0;
-  color: var(--accent);
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-}
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
 
-@media (max-width: 900px){
-  .exp-grid{grid-template-columns: 1fr; gap: 36px}
-}
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 18px;
+      border: 1px solid var(--border-glow);
+      border-radius: var(--radius-full);
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      background: rgba(0, 210, 255, 0.06);
+      transition: var(--transition-smooth);
+    }
 
-/* SKILLS */
-.skills{background: var(--bg-2); border-top: 1px solid var(--line)}
-.skills-grid{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 48px;
-}
-.skill-block{
-  border-top: 1px solid var(--line);
-  padding-top: 24px;
-}
-.skill-block h3{
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-size: 30px;
-  font-weight: 400;
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-.skill-block h3 .count{
-  font-family: 'JetBrains Mono', monospace;
-  font-style: normal;
-  font-size: 11px;
-  color: var(--ink-soft);
-  letter-spacing: .1em;
-}
-.skill-list{list-style: none}
-.skill-list li{
-  padding: 12px 0;
-  border-bottom: 1px dashed var(--line);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 16px;
-  transition: padding .4s, color .4s;
-  cursor: default;
-}
-.skill-list li:hover{
-  padding-left: 12px;
-  color: var(--accent);
-}
-.skill-list li .level{
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: var(--ink-soft);
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
+    .nav-cta:hover {
+      background: var(--primary);
+      color: #050b14;
+      box-shadow: 0 0 20px var(--primary-glow);
+    }
 
-@media (max-width: 900px){
-  .skills-grid{grid-template-columns: 1fr; gap: 36px}
-}
+    /* Container */
+    .container {
+      width: min(90%, 1140px);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
 
-/* CONTACT */
-.contact{
-  background: var(--bg);
-  text-align: center;
-  padding: 140px 40px 100px;
-  position: relative;
-  overflow: hidden;
-  border-top: 1px solid var(--line);
-}
+    /* HERO SECTION */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 140px 0 80px;
+      position: relative;
+    }
 
-#canvas-contact{
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  opacity: .5;
-}
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 40px;
+      align-items: center;
+    }
 
-.contact > *{position: relative; z-index: 1}
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      background: rgba(0, 210, 255, 0.08);
+      border: 1px solid rgba(0, 210, 255, 0.25);
+      color: var(--primary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      animation: pulseGlow 3s infinite;
+    }
 
-.contact-pre{
-  color: var(--accent);
-  margin-bottom: 32px;
-}
-.contact h2{
-  font-family: 'Fraunces', serif;
-  font-weight: 300;
-  font-size: clamp(56px, 11vw, 180px);
-  line-height: .9;
-  letter-spacing: -.035em;
-  margin-bottom: 50px;
-}
-.contact h2 em{
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  color: var(--accent);
-}
+    .hero-pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #38ef7d;
+      box-shadow: 0 0 8px #38ef7d;
+    }
 
-.email-btn{
-  display: inline-block;
-  position: relative;
-  padding: 22px 56px;
-  border: 1px solid var(--ink);
-  border-radius: 999px;
-  font-family: 'Instrument Serif', serif;
-  font-style: italic;
-  font-size: 28px;
-  color: var(--ink);
-  text-decoration: none;
-  overflow: hidden;
-  transition: color .4s ease, border-color .4s ease;
-  will-change: transform;
-}
-.email-btn::before{
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--accent);
-  transform: translateY(101%);
-  transition: transform .55s cubic-bezier(.7,0,.3,1);
-  z-index: -1;
-}
-.email-btn:hover{
-  color: var(--bg);
-  border-color: var(--accent);
-}
-.email-btn:hover::before{transform: translateY(0)}
+    @keyframes pulseGlow {
 
-.contact-links{
-  margin-top: 50px;
-  display: flex;
-  justify-content: center;
-  gap: 36px;
-  flex-wrap: wrap;
-}
-.contact-links a{
-  color: var(--ink-soft);
-  text-decoration: none;
-  border-bottom: 1px dashed var(--line);
-  padding-bottom: 4px;
-  transition: color .3s, border-color .3s;
-}
-.contact-links a:hover{color: var(--accent); border-color: var(--accent)}
+      0%,
+      100% {
+        border-color: rgba(0, 210, 255, 0.25);
+      }
 
-/* FOOTER */
-footer{
-  background: var(--bg);
-  padding: 28px 40px;
-  display: flex;
-  justify-content: space-between;
-  color: var(--ink-soft);
-  border-top: 1px solid var(--line);
-  flex-wrap: wrap;
-  gap: 12px;
-}
+      50% {
+        border-color: rgba(0, 210, 255, 0.55);
+      }
+    }
 
-/* PARALLAX */
-[data-parallax]{will-change: transform}
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.4rem, 4.8vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.025em;
+      margin-bottom: 20px;
+    }
 
-.fade-up{
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 1s cubic-bezier(.2,.9,.2,1), transform 1s cubic-bezier(.2,.9,.2,1);
-}
-.fade-up.in{opacity: 1; transform: translateY(0)}
+    .hero-title .flutter-highlight {
+      background: linear-gradient(135deg, #00d2ff, #3a86ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+    }
 
-@media (max-width: 700px){
-  footer{padding: 20px}
-}
-</style>
+    .hero-subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      line-height: 1.65;
+      max-width: 560px;
+      margin-bottom: 34px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--primary), #0077ff);
+      color: #050b14;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 13px 28px;
+      border-radius: var(--radius-full);
+      text-decoration: none;
+      transition: var(--transition-smooth);
+      box-shadow: 0 4px 20px rgba(0, 210, 255, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0, 210, 255, 0.45);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 13px 26px;
+      border-radius: var(--radius-full);
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-subtle);
+      max-width: 540px;
+    }
+
+    .metric-item .metric-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .metric-item .metric-val span {
+      color: var(--primary);
+    }
+
+    .metric-item .metric-label {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    /* HERO INTERACTIVE PHONE CARD */
+    .hero-device-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 10px;
+    }
+
+    .device-card {
+      width: 326px;
+      background: #0b111e;
+      border: 1.5px solid rgba(0, 210, 255, 0.3);
+      border-radius: 38px;
+      padding: 12px;
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.75),
+        0 0 35px rgba(0, 210, 255, 0.15);
+      position: relative;
+      z-index: 2;
+      transition: var(--transition-smooth);
+    }
+
+    .device-card:hover {
+      transform: translateY(-4px);
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.85),
+        0 0 45px rgba(0, 210, 255, 0.25);
+    }
+
+    .device-screen {
+      background: #070a12;
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      display: flex;
+      flex-direction: column;
+      height: 505px;
+    }
+
+    .device-notch {
+      width: 110px;
+      height: 18px;
+      background: #0b111e;
+      border-radius: 0 0 12px 12px;
+      margin: 0 auto 8px;
+      flex-shrink: 0;
+    }
+
+    .device-header {
+      padding: 4px 16px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+    }
+
+    .device-header .app-badge {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .device-tabs {
+      display: flex;
+      gap: 4px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+    }
+
+    .dev-tab-btn {
+      flex: 1;
+      padding: 6px 0;
+      font-size: 0.7rem;
+      font-weight: 600;
+      border: none;
+      background: transparent;
+      color: var(--text-dim);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .dev-tab-btn.active {
+      background: rgba(0, 210, 255, 0.15);
+      color: var(--primary);
+    }
+
+    .device-body {
+      padding: 12px;
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      scrollbar-width: none;
+    }
+
+    .device-body::-webkit-scrollbar {
+      display: none;
+    }
+
+    .mini-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 10px 12px;
+      transition: var(--transition-smooth);
+    }
+
+    .mini-card:hover {
+      border-color: rgba(0, 210, 255, 0.3);
+      background: rgba(0, 210, 255, 0.05);
+    }
+
+    .mini-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      margin-bottom: 4px;
+    }
+
+    .mini-card-title {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .mini-badge {
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(0, 210, 255, 0.12);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .mini-desc {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .device-home-bar {
+      width: 90px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 4px;
+      margin: 8px auto 6px;
+      flex-shrink: 0;
+    }
+
+    /* Floating badges on device */
+    .float-tag {
+      position: absolute;
+      background: rgba(13, 22, 38, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(0, 210, 255, 0.35);
+      padding: 8px 14px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #fff;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 210, 255, 0.15);
+      z-index: 10;
+      white-space: nowrap;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .float-tag.tag-top {
+      top: 15px;
+      left: -42px;
+      animation-delay: 0s;
+    }
+
+    .float-tag.tag-bottom {
+      bottom: 25px;
+      right: -42px;
+      animation-delay: 2s;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    /* SECTION STYLES */
+    section {
+      padding: 100px 0;
+      position: relative;
+    }
+
+    .section-header {
+      margin-bottom: 56px;
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--primary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2rem, 3.8vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-top: 8px;
+      max-width: 600px;
+    }
+
+    /* ABOUT SECTION */
+    .about-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 44px;
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 40px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .about-text p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+
+    .about-text p strong {
+      color: var(--text-main);
+    }
+
+    .about-highlights {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .highlight-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: var(--transition-smooth);
+    }
+
+    .highlight-box:hover {
+      background: rgba(0, 210, 255, 0.05);
+      border-color: rgba(0, 210, 255, 0.3);
+      transform: translateX(4px);
+    }
+
+    .highlight-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(0, 210, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .highlight-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .highlight-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* PROJECTS SECTION */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 28px;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0, 210, 255, 0.35);
+      box-shadow: 0 20px 40px rgba(0, 210, 255, 0.12);
+    }
+
+    .project-header-bar {
+      padding: 22px 26px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .project-no {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .project-status {
+      font-size: 0.72rem;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .project-status.deployed {
+      background: rgba(16, 185, 129, 0.12);
+      color: #34d399;
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .project-body {
+      padding: 0 26px 26px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .project-desc {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+      margin-bottom: 22px;
+      flex: 1;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: auto;
+    }
+
+    .p-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      background: rgba(0, 210, 255, 0.06);
+      color: var(--primary);
+      border: 1px solid rgba(0, 210, 255, 0.15);
+      font-weight: 500;
+    }
+
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .store-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition-smooth);
+    }
+
+    .store-btn:hover {
+      background: rgba(0, 210, 255, 0.1);
+      border-color: rgba(0, 210, 255, 0.4);
+      color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 210, 255, 0.15);
+    }
+
+    .store-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      fill: currentColor;
+    }
+
+    /* EXPERIENCE SECTION */
+    .exp-timeline {
+      position: relative;
+      padding-left: 36px;
+    }
+
+    .exp-timeline::before {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--primary), rgba(0, 210, 255, 0.05));
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 40px;
+    }
+
+    .timeline-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -36px;
+      top: 6px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #07090e;
+      border: 3px solid var(--primary);
+      box-shadow: 0 0 12px var(--primary-glow);
+    }
+
+    .exp-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      backdrop-filter: blur(10px);
+      transition: var(--transition-smooth);
+    }
+
+    .exp-card:hover {
+      border-color: rgba(0, 210, 255, 0.3);
+      transform: translateX(4px);
+    }
+
+    .exp-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .exp-role {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .exp-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      background: rgba(0, 210, 255, 0.12);
+      color: var(--primary);
+      border: 1px solid rgba(0, 210, 255, 0.25);
+    }
+
+    .exp-company {
+      font-size: 0.95rem;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .exp-period {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 16px;
+    }
+
+    .exp-list {
+      list-style: none;
+    }
+
+    .exp-list li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 10px;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .exp-list li::before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+
+    /* SKILLS / TOOLKIT */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      transition: var(--transition-smooth);
+    }
+
+    .skill-card:hover {
+      border-color: rgba(0, 210, 255, 0.35);
+      transform: translateY(-4px);
+    }
+
+    .skill-category {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .skill-cat-icon {
+      font-size: 1.3rem;
+      color: var(--primary);
+    }
+
+    .skill-cat-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .skill-pill {
+      font-size: 0.82rem;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      font-weight: 500;
+      transition: var(--transition-smooth);
+    }
+
+    .skill-pill:hover {
+      background: rgba(0, 210, 255, 0.1);
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    /* CONTACT SECTION */
+    .contact-card {
+      background: radial-gradient(circle at 50% 0%, rgba(0, 210, 255, 0.1) 0%, rgba(14, 20, 32, 0.8) 70%);
+      border: 1px solid rgba(0, 210, 255, 0.25);
+      border-radius: var(--radius-lg);
+      padding: 60px 40px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .contact-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+
+    .contact-sub {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 540px;
+      margin: 0 auto 34px;
+    }
+
+    .contact-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .contact-links-grid {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      padding-top: 30px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .contact-link-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: var(--transition-smooth);
+    }
+
+    .contact-link-item:hover {
+      color: var(--primary);
+    }
+
+    /* TOAST NOTIFICATION */
+    #toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #0f172a;
+      border: 1px solid var(--primary);
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 100000;
+      pointer-events: none;
+    }
+
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border-subtle);
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+    }
+
+    footer .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 960px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 60px;
+      }
+
+      .hero-subtitle {
+        margin: 0 auto 34px;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .hero-metrics {
+        margin: 0 auto;
+      }
+
+      .about-card {
+        grid-template-columns: 1fr;
+        padding: 30px;
+      }
+
+      .nav-menu {
+        display: none;
+      }
+    }
+
+    @media (max-width: 580px) {
+      nav.navbar {
+        padding: 10px 18px;
+      }
+
+      section.hero {
+        padding-top: 130px;
+      }
+
+      .hero-metrics {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .contact-card {
+        padding: 40px 20px;
+      }
+
+      .device-card {
+        width: 100%;
+        max-width: 310px;
+      }
+
+      .float-tag {
+        display: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="cursor-ring"></div>
-<div class="cursor-dot"></div>
-
-<div id="loader">
-  <div class="loader-name">
-    <span>Abhishek</span>&nbsp;<span>Prajapati</span>
-  </div>
-  <div class="loader-sub">
-    <span>Jr. Flutter Developer</span>
-  </div>
-  <div class="loader-bar"></div>
-  <div class="loader-meta mono">Portfolio · 2026</div>
-  <div class="loader-pct mono"><span id="pct">000</span> / 100</div>
-</div>
-
-<nav class="top">
-  <a href="#top" class="brand" data-magnetic>Abhishek &amp; Co.</a>
-  <div class="links mono">
-    <a href="#work" data-magnetic>Work</a>
-    <a href="#about" data-magnetic>About</a>
-    <a href="#contact" data-magnetic>Contact</a>
-  </div>
-</nav>
-
-<section class="hero" id="top">
-  <canvas id="canvas-hero"></canvas>
-  <div class="hero-content">
-    <div class="hero-tag mono"><span class="pulse"></span>Available for new work · 2026</div>
-    <h1>
-      <span class="line"><span>Flutter</span></span>
-      <span class="line"><span class="italic">developer.</span></span>
-    </h1>
-  </div>
-  <div class="hero-foot mono">
-    <span>Indore — 22.7196° N, 75.8577° E</span>
-    <div class="scroll-cue">
-      <span>Scroll</span>
-      <span class="arrow"></span>
-    </div>
-    <span>EST. 2026 / Vol. 01</span>
-  </div>
-</section>
-
-<section class="about" id="about">
-  <div class="section-head">
-    <div class="section-no mono">/ 01</div>
-    <h2 class="section-title">
-      <span class="split"><span>A short</span></span>
-      <span class="split"><span><em>introduction</em>.</span></span>
-    </h2>
-  </div>
-
-  <div class="about-grid">
-    <div class="about-prose">
-      <p data-parallax="0.05">I'm a <em>Jr. Flutter Developer</em> based in Indore, building mobile applications full-time while finishing my B.Tech in Computer Science.</p>
-      <p data-parallax="0.08">My work leans toward apps that have to behave in the <em>real world</em> — fleet tracking, emergency reporting, event management. Networks fail. GPS drifts. Users tap the wrong button at the wrong time.</p>
-      <p data-parallax="0.11">I write in Flutter and Dart, lean on Firebase and REST APIs, manage state with GetX, and have shipped to the Play Store more times than I can count on one hand.</p>
+  <!-- FIRST-TIME INTRO LOADER -->
+  <div id="loader">
+    <div class="loader-brand-icon">
+      <img width="48" height="48" src="https://img.icons8.com/color/48/flutter.png" alt="flutter"
+        style="width: 54px; height: 54px; object-fit: contain; filter: drop-shadow(0 0 16px rgba(0, 210, 255, 0.6)); display: block; margin: 0 auto;" />
     </div>
 
-    <aside class="about-side">
-      <div class="label mono">Index card</div>
-      <dl>
-        <div><dt>Based</dt><dd>Indore, MP — IN</dd></div>
-        <div><dt>Now</dt><dd>Developer Bazaar Tech.</dd></div>
-        <div><dt>Stack</dt><dd>Flutter / Dart / Firebase</dd></div>
-        <div><dt>Status</dt><dd>Open to a chat</dd></div>
-      </dl>
-    </aside>
-  </div>
-</section>
-
-<div class="strip" aria-hidden="true">
-  <div class="strip-track">
-    <span>Flutter</span><span class="dot">●</span>
-    <span>Dart</span><span class="dot">●</span>
-    <span>Firebase</span><span class="dot">●</span>
-    <span>GetX</span><span class="dot">●</span>
-    <span>BLoC</span><span class="dot">●</span>
-    <span>Google Maps</span><span class="dot">●</span>
-    <span>Socket.io</span><span class="dot">●</span>
-    <span>REST</span><span class="dot">●</span>
-    <span>Flutter</span><span class="dot">●</span>
-    <span>Dart</span><span class="dot">●</span>
-    <span>Firebase</span><span class="dot">●</span>
-    <span>GetX</span><span class="dot">●</span>
-    <span>BLoC</span><span class="dot">●</span>
-    <span>Google Maps</span><span class="dot">●</span>
-    <span>Socket.io</span><span class="dot">●</span>
-    <span>REST</span><span class="dot">●</span>
-  </div>
-</div>
-
-<section class="work" id="work">
-  <div class="section-head">
-    <div class="section-no mono">/ 02</div>
-    <h2 class="section-title">
-      <span class="split"><span>Selected</span></span>
-      <span class="split"><span><em>work</em>.</span></span>
-    </h2>
-  </div>
-
-  <div class="project-list">
-
-    <article class="project fade-up">
-      <div class="project-num">N° 01</div>
-      <h3 class="project-title">Route Reporting <em>App</em></h3>
-      <div class="project-info">
-        <p class="project-desc">Google Maps integration with live markers, a one-tap SOS sending real-time distress messages, multi-route reporting with a responsive UI, and a temporary WebSocket chat that opens only during an emergency.</p>
-        <div class="tags">
-          <span class="tag">Google Maps</span>
-          <span class="tag">WebSocket</span>
-          <span class="tag">SOS</span>
-        </div>
-      </div>
-    </article>
-
-    <article class="project fade-up">
-      <div class="project-num">N° 02</div>
-      <h3 class="project-title">Logistics &amp; Fleet <em>Management</em></h3>
-      <div class="project-info">
-        <p class="project-desc">Full driver-side application with a real-time bidding system for service allocation. Live route visualization, geofencing, Socket.io for low-latency updates, and Dio handling the REST layer. Built with Flutter and GetX.</p>
-        <div class="tags">
-          <span class="tag">Flutter</span>
-          <span class="tag">GetX</span>
-          <span class="tag">Socket.io</span>
-          <span class="tag">Geofencing</span>
-        </div>
-      </div>
-    </article>
-
-    <article class="project fade-up">
-      <div class="project-num">N° 03</div>
-      <h3 class="project-title">Event <em>Management</em> App</h3>
-      <div class="project-info">
-        <p class="project-desc">A full event CRUD with private group chat, voting, a ranking system, and Stripe-powered subscriptions. Engagement was the design problem — every feature had to earn its place.</p>
-        <div class="tags">
-          <span class="tag">Stripe</span>
-          <span class="tag">Private Chat</span>
-          <span class="tag">Ranking</span>
-        </div>
-      </div>
-    </article>
-
-    <article class="project fade-up">
-      <div class="project-num">N° 04</div>
-      <h3 class="project-title">Feelify — Music <em>Streaming</em></h3>
-      <div class="project-info">
-        <p class="project-desc">A personal project: a Flutter and Firebase streaming app structured around Clean Architecture and BLoC. Less about the streaming, more about keeping a codebase clean enough that future-me still understood it.</p>
-        <div class="tags">
-          <span class="tag">Personal</span>
-          <span class="tag">BLoC</span>
-          <span class="tag">Clean Arch.</span>
-        </div>
-      </div>
-    </article>
-
-    <article class="project fade-up">
-      <div class="project-num">N° 05</div>
-      <h3 class="project-title">Crony — <em>Chat</em> App</h3>
-      <div class="project-info">
-        <p class="project-desc">Real-time one-to-one messaging with read receipts and last-seen timestamps. A deliberately small app — the goal was getting the small details right.</p>
-        <div class="tags">
-          <span class="tag">Firebase</span>
-          <span class="tag">Real-time</span>
-          <span class="tag">Personal</span>
-        </div>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-<section class="exp" id="experience">
-  <div class="section-head">
-    <div class="section-no mono">/ 03</div>
-    <h2 class="section-title">
-      <span class="split"><span>Where I have</span></span>
-      <span class="split"><span>done the <em>work</em>.</span></span>
-    </h2>
-  </div>
-
-  <div class="exp-grid">
-    <article class="exp-card fade-up">
-      <div class="exp-when mono">
-        <span>Mar 2026 — Present</span>
-        <span class="badge">Current</span>
-      </div>
-      <h3 class="exp-role">Jr. Flutter Developer</h3>
-      <div class="exp-co">Developer Bazaar Technologies</div>
-      <ul>
-        <li>Promoted to full-time after a six-month internship.</li>
-        <li>Build and maintain scalable Flutter apps with clean architecture.</li>
-        <li>Work cross-functionally to define, design, and ship new features.</li>
-      </ul>
-    </article>
-
-    <article class="exp-card fade-up">
-      <div class="exp-when mono">
-        <span>Sep 2025 — Feb 2026</span>
-        <span class="badge alt">Internship</span>
-      </div>
-      <h3 class="exp-role">Flutter Developer Intern</h3>
-      <div class="exp-co">Developer Bazaar Technologies</div>
-      <ul>
-        <li>Built Flutter applications for international client projects.</li>
-        <li>Integrated Firebase services and REST APIs end-to-end.</li>
-        <li>Implemented real-time data flows and FCM push notifications.</li>
-        <li>Published apps to the Play Store — release builds, signing, updates.</li>
-      </ul>
-    </article>
-  </div>
-</section>
-
-<section class="skills" id="skills">
-  <div class="section-head">
-    <div class="section-no mono">/ 04</div>
-    <h2 class="section-title">
-      <span class="split"><span>The</span></span>
-      <span class="split"><span><em>toolkit</em>.</span></span>
-    </h2>
-  </div>
-
-  <div class="skills-grid">
-    <div class="skill-block fade-up">
-      <h3>Core <span class="count">/ 06</span></h3>
-      <ul class="skill-list">
-        <li>Flutter</li>
-        <li>Dart</li>
-        <li>GetX</li>
-        <li>BLoC</li>
-        <li>OOP</li>
-        <li>MVC</li>
-      </ul>
+    <div class="loader-name">
+      <span>Abhishek</span>&nbsp;<span>Prajapati</span>
     </div>
 
-    <div class="skill-block fade-up">
-      <h3>Backend &amp; APIs <span class="count">/ 06</span></h3>
-      <ul class="skill-list">
-        <li>Firebase Auth</li>
-        <li>Firestore</li>
-        <li>Realtime DB</li>
-        <li>FCM Push</li>
-        <li>REST APIs</li>
-        <li>Google Maps</li>
-      </ul>
+    <div class="loader-sub">
+      <span>Jr. Flutter Developer</span>
     </div>
 
-    <div class="skill-block fade-up">
-      <h3>Workshop <span class="count">/ 05</span></h3>
-      <ul class="skill-list">
-        <li>Git &amp; GitHub</li>
-        <li>Android Studio</li>
-        <li>VS Code</li>
-        <li>Postman</li>
-        <li>Play Console</li>
-      </ul>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar-fill" id="loaderBar"></div>
     </div>
+
+    <div class="loader-meta">Portfolio · 2026</div>
+    <div class="loader-pct"><span id="pct">000</span> / 100</div>
   </div>
-</section>
 
-<section class="contact" id="contact">
-  <canvas id="canvas-contact"></canvas>
-  <div class="contact-pre mono">/ 05 — Get in touch</div>
-  <h2>Let's build<br><em>something</em> together.</h2>
-  <a href="mailto:pabhi7660@gmail.com" class="email-btn" data-magnetic>pabhi7660@gmail.com</a>
-  <div class="contact-links mono">
-    <a href="tel:+918223889172" data-magnetic>+91 82238 89172</a>
-    <a href="https://github.com/" target="_blank" rel="noopener" data-magnetic>GitHub</a>
-    <a href="#top" data-magnetic>Back to top ↑</a>
-  </div>
-</section>
+  <!-- Ambient glowing tech background -->
+  <div class="ambient-bg"></div>
 
-<footer class="mono">
-  <span>© 2026 Abhishek Prajapati</span>
-  <span>Hand-built · No templates</span>
-</footer>
+  <!-- Smooth cursor follower -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!-- Toast for copied email -->
+  <div id="toast">✓ Email copied to clipboard!</div>
 
-<script>
-/* LOADER PROGRESS */
-(function(){
-  const pct = document.getElementById('pct');
-  const loader = document.getElementById('loader');
-  let n = 0;
-  const iv = setInterval(()=>{
-    n += Math.random()*7 + 2;
-    if(n >= 100){
-      n = 100;
-      clearInterval(iv);
-      setTimeout(()=> loader.classList.add('done'), 400);
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="#top" class="brand-logo">
+      <img width="48" height="48" src="https://img.icons8.com/color/48/flutter.png" alt="flutter"
+        class="flutter-icon" />
+      <span class="brand-name">Abhishek Prajapati</span>
+    </a>
+
+    <ul class="nav-menu font-mono">
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#projects" class="nav-link">Projects</a></li>
+      <li><a href="#experience" class="nav-link">Experience</a></li>
+      <li><a href="#skills" class="nav-link">Toolkit</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+
+    <a href="#contact" class="nav-cta">Get in Touch</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="top">
+    <div class="container">
+      <div class="hero-grid">
+
+        <!-- Hero Left Info -->
+        <div class="hero-info">
+          <div class="hero-pill font-mono">
+            <span class="hero-pill-dot"></span>
+            Available for Flutter & Mobile Projects
+          </div>
+
+          <h1 class="hero-title">
+            Crafting <span class="flutter-highlight">Butter-Smooth</span> Mobile Apps with Flutter.
+          </h1>
+
+          <p class="hero-subtitle">
+            Hi, I’m <strong>Abhishek Prajapati</strong> — a dedicated Flutter Developer with professional experience
+            engineering resilient, high-performance Android & iOS applications with BLoC, GetX, and REST APIs.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#projects" class="btn-primary">
+              <span>View Selected Work</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17" />
+              </svg>
+            </a>
+            <button onclick="copyEmail()" class="btn-secondary" id="copyBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              </svg>
+              <span>Copy Email</span>
+            </button>
+          </div>
+
+          <div class="hero-metrics">
+            <div class="metric-item">
+              <div class="metric-val">1+<span>yr</span></div>
+              <div class="metric-label">Pro Experience</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-val">5+<span>Apps</span></div>
+              <div class="metric-label">Shipped & Maintained</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-val">100<span>%</span></div>
+              <div class="metric-label">Pixel-Perfect UI</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Right: Interactive Mobile Mockup -->
+        <div class="hero-device-wrapper">
+
+          <div class="float-tag tag-top">
+            <span style="color: #38ef7d;">⚡</span> High-Performance Native
+          </div>
+
+          <div class="float-tag tag-bottom">
+            <span style="color: #00d2ff;">📱</span> Android & iOS Ready
+          </div>
+
+          <div class="device-card">
+            <div class="device-screen">
+              <div class="device-notch"></div>
+
+              <div class="device-header">
+                <div class="app-badge">
+                  <img width="48" height="48" src="https://img.icons8.com/color/48/flutter.png" alt="flutter"
+                    style="width: 16px; height: 16px; object-fit: contain; flex-shrink: 0;" />
+                  Flutter Core
+                </div>
+                <span class="font-mono" style="font-size: 0.65rem; color: #34d399;">● Live</span>
+              </div>
+
+              <!-- Interactive Switcher -->
+              <div class="device-tabs">
+                <button class="dev-tab-btn active" onclick="switchTab(0)">Workforce</button>
+                <button class="dev-tab-btn" onclick="switchTab(1)">Safety GPS</button>
+                <button class="dev-tab-btn" onclick="switchTab(2)">Fleet</button>
+              </div>
+
+              <div class="device-body" id="deviceContent">
+                <!-- Tab 0: Sersi AI -->
+                <div class="mini-card">
+                  <div class="mini-card-head">
+                    <span class="mini-card-title">Sersi AI Team</span>
+                    <span class="mini-badge">BLoC State</span>
+                  </div>
+                  <p class="mini-desc">Enterprise HR & Workforce App. Live REST API models, assessments & AI training
+                    modules.</p>
+                </div>
+
+                <div class="mini-card">
+                  <div class="mini-card-head">
+                    <span class="mini-card-title">Mental Health Check-in</span>
+                    <span class="mini-badge" style="background: rgba(131, 56, 236, 0.15); color: #a78bfa;">DISC
+                      Flow</span>
+                  </div>
+                  <p class="mini-desc">Interactive quiz engine with real-time score calculation and response handling.
+                  </p>
+                </div>
+
+                <div class="mini-card">
+                  <div class="mini-card-head">
+                    <span class="mini-card-title">Leave & Onboarding</span>
+                    <span class="mini-badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">Ready</span>
+                  </div>
+                  <p class="mini-desc">Automated leave approvals with push notifications and document upload.</p>
+                </div>
+              </div>
+
+              <div class="device-home-bar"></div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag font-mono">/ 01 — Overview</div>
+        <h2 class="section-title">Engineered for the Real World.</h2>
+        <p class="section-subtitle">Writing clean, reliable Dart code that withstands network drops, GPS drift, and
+          heavy edge cases.</p>
+      </div>
+
+      <div class="about-card">
+        <div class="about-text">
+          <p>
+            I’m a <strong>Jr. Flutter Developer based in Indore, India</strong> with hands-on industry experience
+            building, maintaining, and deploying commercial mobile applications.
+          </p>
+          <p>
+            My work spans diverse product verticals — from <strong>enterprise workforce platforms and AI training
+              modules</strong> to <strong>real-time safety GPS tracking, fleet logistics, and on-demand home
+              services</strong>.
+          </p>
+          <p>
+            I specialize in translating intricate Figma designs into <strong>pixel-perfect responsive UI</strong>,
+            architecting robust state machines with <strong>BLoC & GetX</strong>, integrating multi-endpoint REST APIs,
+            and publishing builds to the <strong>Google Play Store and Apple App Store</strong>.
+          </p>
+        </div>
+
+        <div class="about-highlights">
+          <div class="highlight-box">
+            <div class="highlight-icon">📱</div>
+            <div>
+              <div class="highlight-title">Cross-Platform Specialist</div>
+              <div class="highlight-desc">Single codebase delivering native feel on Android & iOS.</div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <div class="highlight-icon">🧩</div>
+            <div>
+              <div class="highlight-title">BLoC & GetX State Management</div>
+              <div class="highlight-desc">Clean architecture, decoupled business logic, and modular widgets.</div>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <div class="highlight-icon">🗺️</div>
+            <div>
+              <div class="highlight-title">Maps & Real-Time Systems</div>
+              <div class="highlight-desc">Google Maps SDK, live location polylines, FCM push notifications.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Selected Work / Projects -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag font-mono">/ 02 — Portfolio</div>
+        <h2 class="section-title">Selected Projects.</h2>
+        <p class="section-subtitle">Real applications shipped and maintained across production environments.</p>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- Project 1 -->
+        <div class="project-card">
+          <div class="project-header-bar">
+            <span class="project-no">PROJECT // 01</span>
+            <span class="project-status deployed">Enterprise Platform</span>
+          </div>
+          <div class="project-body">
+            <h3 class="project-name">Sersi AI Team</h3>
+            <p class="project-desc">
+              Comprehensive employee and workforce management mobile application. Engineered the core Flutter client
+              using BLoC pattern, integrating end-to-end REST APIs across authentication, onboarding, employee profiles,
+              mental health check-ins, AI-driven training modules, quizzes, certificates, leave requests, and DISC
+              workflows.
+            </p>
+            <div class="project-tags">
+              <span class="p-tag">Flutter</span>
+              <span class="p-tag">BLoC</span>
+              <span class="p-tag">REST APIs</span>
+              <span class="p-tag">AI Modules</span>
+              <span class="p-tag">Architecture</span>
+            </div>
+            <div class="project-links">
+              <span class="store-btn" style="opacity: 0.75; cursor: default;">
+                <span>🔒 Enterprise Internal Deployment</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card">
+          <div class="project-header-bar">
+            <span class="project-no">PROJECT // 02</span>
+            <span class="project-status deployed">● Live on Stores</span>
+          </div>
+          <div class="project-body">
+            <h3 class="project-name">Sovangels — Safety Navigation</h3>
+            <p class="project-desc">
+              High-reliability personal safety and emergency navigation app. Implemented using GetX state management
+              with Google Maps SDK integration, real-time GPS location tracking, live polylines, heatmaps, incident
+              reporting, emergency contact SOS broadcasts, and Firebase Cloud Messaging (FCM) push notifications.
+            </p>
+            <div class="project-tags">
+              <span class="p-tag">Flutter</span>
+              <span class="p-tag">GetX</span>
+              <span class="p-tag">Google Maps SDK</span>
+              <span class="p-tag">Live GPS</span>
+              <span class="p-tag">FCM Push</span>
+            </div>
+            <div class="project-links">
+              <a href="https://play.google.com/store/apps/details?id=com.app.sovangles" target="_blank" rel="noopener"
+                class="store-btn">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M3.609 1.814L13.792 12 3.61 22.186c-.37-.417-.61-.986-.61-1.686V3.5c0-.7.24-1.269.609-1.686zM15.207 13.414l2.586 2.586-12.879 7.435 10.293-10.021zm0-2.828L4.914.565 17.793 8l-2.586 2.586zm1.414 1.414l3.772-2.178c.808-.466.808-1.226 0-1.692L16.621 12l3.772 2.178c.808.466.808 1.226 0 1.692l-3.772-2.178z" />
+                </svg>
+                <span>Google Play ↗</span>
+              </a>
+              <a href="https://apps.apple.com/in/app/sovangels/id6766228494" target="_blank" rel="noopener"
+                class="store-btn">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.92-2.85-.9.04-1.98.6-2.62 1.34-.56.64-.99 1.7-0.86 2.72 1 .08 2.01-.51 2.56-1.21z" />
+                </svg>
+                <span>App Store ↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-card">
+          <div class="project-header-bar">
+            <span class="project-no">PROJECT // 03</span>
+            <span class="project-status deployed">Unified Architecture</span>
+          </div>
+          <div class="project-body">
+            <h3 class="project-name">ASRI — Fleet & Logistics</h3>
+            <p class="project-desc">
+              Comprehensive logistics platform connecting customers, enterprises, and drivers. Re-architected and
+              consolidated from 3 previously separate applications into a single unified all-in-one Flutter app with
+              role-based workflows, real-time trip bidding, ride allocation, live OTP verification, parcel photo
+              verification flows, and turn-by-turn routing.
+            </p>
+            <div class="project-tags">
+              <span class="p-tag">Flutter</span>
+              <span class="p-tag">GetX</span>
+              <span class="p-tag">All-in-One App</span>
+              <span class="p-tag">Logistics</span>
+              <span class="p-tag">OTP & Photo Proof</span>
+            </div>
+            <div class="project-links">
+              <span class="store-btn" style="opacity: 0.85; border-color: rgba(0, 210, 255, 0.25);">
+                <span>✨ 3 Apps Merged into 1 Unified App</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="project-card">
+          <div class="project-header-bar">
+            <span class="project-no">PROJECT // 04</span>
+            <span class="project-status deployed">● Live on Stores</span>
+          </div>
+          <div class="project-body">
+            <h3 class="project-name">Homi — User & Staff Apps</h3>
+            <p class="project-desc">
+              Dual-sided on-demand home services ecosystem. Built modular Flutter frontends for both Customers (Homi
+              Connect) and Service Professionals (Homi Staff) utilizing BLoC architecture, reusable design system
+              components, and verified live on both Google Play and App Store.
+            </p>
+            <div class="project-tags">
+              <span class="p-tag">Flutter</span>
+              <span class="p-tag">BLoC</span>
+              <span class="p-tag">Figma System</span>
+              <span class="p-tag">User & Staff</span>
+            </div>
+            <div class="project-links">
+              <a href="https://play.google.com/store/apps/details?id=com.homi.user" target="_blank" rel="noopener"
+                class="store-btn">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M3.609 1.814L13.792 12 3.61 22.186c-.37-.417-.61-.986-.61-1.686V3.5c0-.7.24-1.269.609-1.686zM15.207 13.414l2.586 2.586-12.879 7.435 10.293-10.021zm0-2.828L4.914.565 17.793 8l-2.586 2.586zm1.414 1.414l3.772-2.178c.808-.466.808-1.226 0-1.692L16.621 12l3.772 2.178c.808.466.808 1.226 0 1.692l-3.772-2.178z" />
+                </svg>
+                <span>Homi User (Play) ↗</span>
+              </a>
+              <a href="https://apps.apple.com/in/app/homi-connect/id6755593715" target="_blank" rel="noopener"
+                class="store-btn">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.92-2.85-.9.04-1.98.6-2.62 1.34-.56.64-.99 1.7-0.86 2.72 1 .08 2.01-.51 2.56-1.21z" />
+                </svg>
+                <span>Homi User (iOS) ↗</span>
+              </a>
+              <a href="https://play.google.com/store/apps/details?id=com.homi.staff" target="_blank" rel="noopener"
+                class="store-btn">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M3.609 1.814L13.792 12 3.61 22.186c-.37-.417-.61-.986-.61-1.686V3.5c0-.7.24-1.269.609-1.686zM15.207 13.414l2.586 2.586-12.879 7.435 10.293-10.021zm0-2.828L4.914.565 17.793 8l-2.586 2.586zm1.414 1.414l3.772-2.178c.808-.466.808-1.226 0-1.692L16.621 12l3.772 2.178c.808.466.808 1.226 0 1.692l-3.772-2.178z" />
+                </svg>
+                <span>Homi Staff (Play) ↗</span>
+              </a>
+              <a href="https://apps.apple.com/in/app/homi-staff/id6755593577" target="_blank" rel="noopener"
+                class="store-btn">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.92-2.85-.9.04-1.98.6-2.62 1.34-.56.64-.99 1.7-0.86 2.72 1 .08 2.01-.51 2.56-1.21z" />
+                </svg>
+                <span>Homi Staff (iOS) ↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 5 -->
+        <div class="project-card">
+          <div class="project-header-bar">
+            <span class="project-no">PROJECT // 05</span>
+            <span class="project-status deployed">● Live on Stores</span>
+          </div>
+          <div class="project-body">
+            <h3 class="project-name">MakeItHappn — Community Platform</h3>
+            <p class="project-desc">
+              Active production event coordination and community mobile platform. Maintained and enhanced the app by
+              diagnosing complex production issues, optimizing push notification dispatch, resolving
+              subscription/session edge-cases, and managing deep links for event sharing.
+            </p>
+            <div class="project-tags">
+              <span class="p-tag">Flutter</span>
+              <span class="p-tag">Maintenance</span>
+              <span class="p-tag">Deep Linking</span>
+              <span class="p-tag">Push Notifications</span>
+            </div>
+            <div class="project-links">
+              <a href="https://play.google.com/store/apps/details?id=com.makeithappn.app" target="_blank" rel="noopener"
+                class="store-btn">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M3.609 1.814L13.792 12 3.61 22.186c-.37-.417-.61-.986-.61-1.686V3.5c0-.7.24-1.269.609-1.686zM15.207 13.414l2.586 2.586-12.879 7.435 10.293-10.021zm0-2.828L4.914.565 17.793 8l-2.586 2.586zm1.414 1.414l3.772-2.178c.808-.466.808-1.226 0-1.692L16.621 12l3.772 2.178c.808.466.808 1.226 0 1.692l-3.772-2.178z" />
+                </svg>
+                <span>Google Play ↗</span>
+              </a>
+              <a href="https://apps.apple.com/in/app/makeithappn/id6615064270" target="_blank" rel="noopener"
+                class="store-btn">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.62-.75 1.04-1.8 0.92-2.85-.9.04-1.98.6-2.62 1.34-.56.64-.99 1.7-0.86 2.72 1 .08 2.01-.51 2.56-1.21z" />
+                </svg>
+                <span>App Store ↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Timeline -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag font-mono">/ 03 — Career</div>
+        <h2 class="section-title">Work Experience.</h2>
+        <p class="section-subtitle">Track record of building and maintaining production-grade applications.</p>
+      </div>
+
+      <div class="exp-timeline">
+
+        <!-- Experience 1 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="exp-card">
+            <div class="exp-top">
+              <div>
+                <h3 class="exp-role">Flutter Developer</h3>
+                <div class="exp-company">Developer Bazaar Technologies</div>
+              </div>
+              <span class="exp-badge">Mar 2026 — Present (Full-time)</span>
+            </div>
+            <div class="exp-period">Indore, Madhya Pradesh, India</div>
+            <ul class="exp-list">
+              <li>Promoted to full-time Flutter Developer following successful completion of a six-month high-impact
+                internship.</li>
+              <li>Lead mobile development on production Flutter applications across UI architecture, state management
+                (BLoC & GetX), REST API integration, and debugging.</li>
+              <li>Collaborate closely with cross-functional teams including backend engineers, UI/UX designers, and QA
+                to ship robust features on schedule.</li>
+              <li>Oversee app release pipelines and deployment cycles for the Google Play Store and Apple App Store.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Experience 2 -->
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="exp-card">
+            <div class="exp-top">
+              <div>
+                <h3 class="exp-role">Flutter Developer Intern</h3>
+                <div class="exp-company">Developer Bazaar Technologies</div>
+              </div>
+              <span class="exp-badge"
+                style="background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border-color: var(--border-subtle);">Sep
+                2025 — Feb 2026</span>
+            </div>
+            <div class="exp-period">Indore, Madhya Pradesh, India</div>
+            <ul class="exp-list">
+              <li>Constructed responsive, pixel-accurate Flutter interfaces from Figma prototypes and engineered modular
+                reusable components.</li>
+              <li>Integrated REST APIs, Firebase Authentication, FCM push notifications, and Google Maps/GPS location
+                services.</li>
+              <li>Performed thorough code debugging, unit testing, release builds, app signing, and Google Play Store
+                publication.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills / Toolkit -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-tag font-mono">/ 04 — Toolkit</div>
+        <h2 class="section-title">Technical Expertise.</h2>
+        <p class="section-subtitle">The tools, frameworks, and technologies I rely on every day.</p>
+      </div>
+
+      <div class="skills-grid">
+
+        <div class="skill-card">
+          <div class="skill-category">
+            <span class="skill-cat-icon">⚡</span>
+            <h3 class="skill-cat-title">Core Mobile</h3>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-pill">Flutter</span>
+            <span class="skill-pill">Dart</span>
+            <span class="skill-pill">Android (Java/Kotlin)</span>
+            <span class="skill-pill">iOS (Swift)</span>
+            <span class="skill-pill">Responsive UI</span>
+            <span class="skill-pill">Custom Widgets</span>
+            <span class="skill-pill">Animations</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-category">
+            <span class="skill-cat-icon">🧠</span>
+            <h3 class="skill-cat-title">State & Architecture</h3>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-pill">BLoC Pattern</span>
+            <span class="skill-pill">GetX</span>
+            <span class="skill-pill">Provider</span>
+            <span class="skill-pill">MVC / MVVM</span>
+            <span class="skill-pill">Clean Architecture</span>
+            <span class="skill-pill">OOP & SOLID</span>
+            <span class="skill-pill">Repository Pattern</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-category">
+            <span class="skill-cat-icon">🌐</span>
+            <h3 class="skill-cat-title">APIs & Services</h3>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-pill">RESTful APIs</span>
+            <span class="skill-pill">JSON Serialization</span>
+            <span class="skill-pill">Firebase Auth</span>
+            <span class="skill-pill">Firestore</span>
+            <span class="skill-pill">FCM Push Alerts</span>
+            <span class="skill-pill">Google Maps SDK</span>
+            <span class="skill-pill">Live GPS Polylines</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-category">
+            <span class="skill-cat-icon">🛠️</span>
+            <h3 class="skill-cat-title">Tools & Delivery</h3>
+          </div>
+          <div class="skill-pills">
+            <span class="skill-pill">Android Studio</span>
+            <span class="skill-pill">VS Code</span>
+            <span class="skill-pill">Xcode</span>
+            <span class="skill-pill">Git & GitHub</span>
+            <span class="skill-pill">Postman</span>
+            <span class="skill-pill">Play Console</span>
+            <span class="skill-pill">App Store Connect</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-card">
+        <div class="section-tag font-mono" style="justify-content: center;">/ 05 — Get In Touch</div>
+        <h2 class="contact-title">Let’s build something great.</h2>
+        <p class="contact-sub">
+          Have an exciting project, opportunity, or want to discuss Flutter architecture? My inbox is always open.
+        </p>
+
+        <div class="contact-actions">
+          <a href="mailto:pabhi7660@gmail.com" class="btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+            <span>pabhi7660@gmail.com</span>
+          </a>
+          <a href="tel:+918223889172" class="btn-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            <span>+91 82238 89172</span>
+          </a>
+        </div>
+
+        <div class="contact-links-grid font-mono">
+          <a href="https://github.com/" target="_blank" rel="noopener" class="contact-link-item">
+            <span>GitHub ↗</span>
+          </a>
+          <a href="https://linkedin.com/" target="_blank" rel="noopener" class="contact-link-item">
+            <span>LinkedIn ↗</span>
+          </a>
+          <span class="contact-link-item" style="color: var(--text-dim);">
+            📍 Indore, MP, India
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content font-mono">
+        <span>© 2026 Abhishek Prajapati</span>
+        <span>Jr. Flutter Developer · Android & iOS</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Smooth first-time loading screen
+    (function initLoader() {
+      const pct = document.getElementById('pct');
+      const loader = document.getElementById('loader');
+      const bar = document.getElementById('loaderBar');
+      if (!pct || !loader || !bar) return;
+
+      let current = 0;
+      const interval = setInterval(() => {
+        current += Math.floor(Math.random() * 8) + 4;
+        if (current >= 100) {
+          current = 100;
+          clearInterval(interval);
+          bar.style.width = '100%';
+          pct.textContent = '100';
+          setTimeout(() => {
+            loader.classList.add('done');
+          }, 350);
+        } else {
+          bar.style.width = current + '%';
+          pct.textContent = String(current).padStart(3, '0');
+        }
+      }, 35);
+    })();
+
+    // Smooth custom cursor follower
+    const dot = document.querySelector('.cursor-dot');
+    const ring = document.querySelector('.cursor-ring');
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let ringX = mouseX;
+    let ringY = mouseY;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.left = mouseX + 'px';
+      dot.style.top = mouseY + 'px';
+    });
+
+    function renderCursor() {
+      ringX += (mouseX - ringX) * 0.2;
+      ringY += (mouseY - ringY) * 0.2;
+      ring.style.left = ringX + 'px';
+      ring.style.top = ringY + 'px';
+      requestAnimationFrame(renderCursor);
     }
-    pct.textContent = String(Math.floor(n)).padStart(3,'0');
-  }, 60);
-})();
+    renderCursor();
 
-/* CUSTOM CURSOR */
-(function(){
-  const dot = document.querySelector('.cursor-dot');
-  const ring = document.querySelector('.cursor-ring');
-  if(!dot || !ring) return;
-
-  let mx = window.innerWidth/2, my = window.innerHeight/2;
-  let rx = mx, ry = my;
-
-  window.addEventListener('mousemove', e=>{
-    mx = e.clientX; my = e.clientY;
-    dot.style.left = mx + 'px';
-    dot.style.top = my + 'px';
-  });
-
-  function loop(){
-    rx += (mx - rx) * 0.18;
-    ry += (my - ry) * 0.18;
-    ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
-    requestAnimationFrame(loop);
-  }
-  loop();
-
-  const hovers = document.querySelectorAll('a, button, .project, .skill-list li, [data-magnetic]');
-  hovers.forEach(el=>{
-    el.addEventListener('mouseenter', ()=>{
-      ring.classList.add('hover');
-      dot.classList.add('hover');
-    });
-    el.addEventListener('mouseleave', ()=>{
-      ring.classList.remove('hover');
-      dot.classList.remove('hover');
-    });
-  });
-})();
-
-/* MAGNETIC BUTTONS */
-(function(){
-  const mags = document.querySelectorAll('[data-magnetic]');
-  mags.forEach(el=>{
-    let tx = 0, ty = 0, cx = 0, cy = 0;
-    let raf = null;
-
-    el.addEventListener('mousemove', e=>{
-      const r = el.getBoundingClientRect();
-      const x = e.clientX - r.left - r.width/2;
-      const y = e.clientY - r.top - r.height/2;
-      tx = x * 0.35;
-      ty = y * 0.35;
-      if(!raf) raf = requestAnimationFrame(animate);
+    const hoverables = document.querySelectorAll('a, button, .project-card, .skill-card, .highlight-box');
+    hoverables.forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hovered'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hovered'));
     });
 
-    el.addEventListener('mouseleave', ()=>{
-      tx = 0; ty = 0;
-      if(!raf) raf = requestAnimationFrame(animate);
-    });
-
-    function animate(){
-      cx += (tx - cx) * 0.18;
-      cy += (ty - cy) * 0.18;
-      el.style.transform = `translate(${cx}px, ${cy}px)`;
-      if(Math.abs(tx-cx) > 0.1 || Math.abs(ty-cy) > 0.1){
-        raf = requestAnimationFrame(animate);
-      } else {
-        raf = null;
-      }
+    // Copy email with smooth toast
+    function copyEmail() {
+      const email = "pabhi7660@gmail.com";
+      navigator.clipboard.writeText(email).then(() => {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+      });
     }
-  });
-})();
 
-/* PARALLAX */
-(function(){
-  const items = document.querySelectorAll('[data-parallax]');
-  function update(){
-    items.forEach(el=>{
-      const speed = parseFloat(el.dataset.parallax) || 0.1;
-      const r = el.getBoundingClientRect();
-      const center = r.top + r.height/2 - window.innerHeight/2;
-      el.style.transform = `translateY(${-center * speed}px)`;
-    });
-    requestAnimationFrame(update);
-  }
-  update();
-})();
+    // Interactive Phone Mockup Tabs
+    const demoData = [
+      [
+        { title: "Sersi AI Team", badge: "BLoC State", desc: "Enterprise HR & Workforce App. Live REST API models, assessments & AI training modules." },
+        { title: "Mental Health Check-in", badge: "DISC Flow", badgeStyle: "background: rgba(131, 56, 236, 0.15); color: #a78bfa;", desc: "Interactive quiz engine with real-time score calculation and response handling." },
+        { title: "Leave & Onboarding", badge: "Ready", badgeStyle: "background: rgba(16, 185, 129, 0.15); color: #34d399;", desc: "Automated leave approvals with push notifications and document upload." }
+      ],
+      [
+        { title: "Sovangels Safety", badge: "GetX + Maps", desc: "Real-time emergency tracking with Google Maps SDK & live GPS polylines." },
+        { title: "SOS Broadcast Flow", badge: "FCM Push", badgeStyle: "background: rgba(239, 68, 68, 0.15); color: #f87171;", desc: "Instant emergency contact alerting with accurate location coordinate packets." },
+        { title: "Area Heatmaps", badge: "Live Alerts", badgeStyle: "background: rgba(245, 158, 11, 0.15); color: #fbbf24;", desc: "Visual safety zones, hazard reporting, and crowd-sourced incident feeds." }
+      ],
+      [
+        { title: "ASRI Unified Platform", badge: "All-in-One App", desc: "Unified Customer, Enterprise & Driver logistics ecosystem in a single Flutter app." },
+        { title: "OTP & Parcel Proof", badge: "Secure Flow", badgeStyle: "background: rgba(16, 185, 129, 0.15); color: #34d399;", desc: "Camera capture verification for parcel handoff with encrypted backend sync." },
+        { title: "Live Route Tracker", badge: "GPS Routing", badgeStyle: "background: rgba(0, 210, 255, 0.15); color: #00d2ff;", desc: "Turn-by-turn driver tracking with automated distance and ETA calculation." }
+      ]
+    ];
 
-/* REVEAL ON SCROLL */
-(function(){
-  const io = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.classList.add('in');
-        io.unobserve(e.target);
-      }
-    });
-  }, {threshold: 0.15});
+    function switchTab(index) {
+      const btns = document.querySelectorAll('.dev-tab-btn');
+      btns.forEach((b, i) => b.classList.toggle('active', i === index));
 
-  document.querySelectorAll('.fade-up, .section-title').forEach(el=>io.observe(el));
-})();
-
-/* HERO 3D SCENE */
-(function(){
-  const canvas = document.getElementById('canvas-hero');
-  if(!canvas || typeof THREE === 'undefined') return;
-
-  const scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0x0a0a0a, 6, 18);
-
-  const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 100);
-  camera.position.z = 8;
-
-  const renderer = new THREE.WebGLRenderer({canvas, antialias: true, alpha: true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor(0x0a0a0a, 1);
-
-  const ambient = new THREE.AmbientLight(0xefeae0, 0.4);
-  scene.add(ambient);
-
-  const key = new THREE.DirectionalLight(0xefeae0, 1.0);
-  key.position.set(5, 5, 5);
-  scene.add(key);
-
-  const fill = new THREE.PointLight(0xff5722, 2.5, 15);
-  fill.position.set(-3, -2, 3);
-  scene.add(fill);
-
-  const rim = new THREE.PointLight(0xe8d8a8, 1.5, 12);
-  rim.position.set(3, 2, -3);
-  scene.add(rim);
-
-  const shapes = [];
-  const mat = new THREE.MeshStandardMaterial({
-    color: 0xefeae0, roughness: 0.15, metalness: 0.4
-  });
-  const matAccent = new THREE.MeshStandardMaterial({
-    color: 0xff5722, roughness: 0.3, metalness: 0.6
-  });
-  const matGold = new THREE.MeshStandardMaterial({
-    color: 0xe8d8a8, roughness: 0.2, metalness: 0.7
-  });
-
-  const geos = [
-    new THREE.IcosahedronGeometry(0.7, 0),
-    new THREE.TorusGeometry(0.5, 0.18, 16, 60),
-    new THREE.OctahedronGeometry(0.65, 0),
-    new THREE.TorusKnotGeometry(0.4, 0.14, 80, 16),
-    new THREE.DodecahedronGeometry(0.55, 0),
-    new THREE.TetrahedronGeometry(0.7, 0),
-    new THREE.IcosahedronGeometry(0.5, 0),
-    new THREE.TorusGeometry(0.35, 0.12, 12, 40)
-  ];
-
-  const materials = [mat, matAccent, mat, matGold, mat, matAccent, matGold, mat];
-
-  for(let i = 0; i < geos.length; i++){
-    const mesh = new THREE.Mesh(geos[i], materials[i]);
-    const angle = (i / geos.length) * Math.PI * 2;
-    const radius = 3.2 + Math.random() * 0.8;
-    mesh.position.x = Math.cos(angle) * radius;
-    mesh.position.y = Math.sin(angle) * radius * 0.6;
-    mesh.position.z = (Math.random() - 0.5) * 4;
-    mesh.userData.basePos = mesh.position.clone();
-    mesh.userData.rotSpeed = {
-      x: (Math.random() - 0.5) * 0.008,
-      y: (Math.random() - 0.5) * 0.008,
-      z: (Math.random() - 0.5) * 0.005
-    };
-    mesh.userData.floatOffset = Math.random() * Math.PI * 2;
-    mesh.userData.floatSpeed = 0.4 + Math.random() * 0.5;
-    scene.add(mesh);
-    shapes.push(mesh);
-  }
-
-  let mouseX = 0, mouseY = 0;
-  let targetX = 0, targetY = 0;
-
-  window.addEventListener('mousemove', e=>{
-    targetX = (e.clientX / window.innerWidth - 0.5) * 2;
-    targetY = (e.clientY / window.innerHeight - 0.5) * 2;
-  });
-
-  window.addEventListener('touchmove', e=>{
-    if(e.touches[0]){
-      targetX = (e.touches[0].clientX / window.innerWidth - 0.5) * 2;
-      targetY = (e.touches[0].clientY / window.innerHeight - 0.5) * 2;
+      const container = document.getElementById('deviceContent');
+      const items = demoData[index];
+      container.innerHTML = items.map(item => `
+        <div class="mini-card" style="animation: fadeIn 0.3s ease;">
+          <div class="mini-card-head">
+            <span class="mini-card-title">${item.title}</span>
+            <span class="mini-badge" style="${item.badgeStyle || ''}">${item.badge}</span>
+          </div>
+          <p class="mini-desc">${item.desc}</p>
+        </div>
+      `).join('');
     }
-  }, {passive: true});
-
-  let scrollY = 0;
-  window.addEventListener('scroll', ()=>{ scrollY = window.scrollY });
-
-  const clock = new THREE.Clock();
-
-  function animate(){
-    requestAnimationFrame(animate);
-    const t = clock.getElapsedTime();
-
-    mouseX += (targetX - mouseX) * 0.04;
-    mouseY += (targetY - mouseY) * 0.04;
-
-    shapes.forEach((m, i)=>{
-      m.rotation.x += m.userData.rotSpeed.x;
-      m.rotation.y += m.userData.rotSpeed.y;
-      m.rotation.z += m.userData.rotSpeed.z;
-
-      const base = m.userData.basePos;
-      const float = Math.sin(t * m.userData.floatSpeed + m.userData.floatOffset) * 0.4;
-
-      const pullStrength = 1.8;
-      m.position.x = base.x + float + mouseX * pullStrength * (1 + i * 0.05);
-      m.position.y = base.y + Math.cos(t * m.userData.floatSpeed * 0.7) * 0.3 + -mouseY * pullStrength;
-      m.position.z = base.z + float * 0.5;
-    });
-
-    camera.position.x += (mouseX * 0.6 - camera.position.x) * 0.05;
-    camera.position.y += (-mouseY * 0.4 - camera.position.y) * 0.05;
-
-    const sFactor = Math.min(scrollY / window.innerHeight, 1);
-    camera.position.z = 8 + sFactor * 4;
-    camera.lookAt(0, 0, 0);
-
-    renderer.render(scene, camera);
-  }
-  animate();
-
-  window.addEventListener('resize', ()=>{
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  });
-})();
-
-/* CONTACT 3D SCENE — particle field */
-(function(){
-  const canvas = document.getElementById('canvas-contact');
-  if(!canvas || typeof THREE === 'undefined') return;
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
-  camera.position.z = 6;
-
-  const renderer = new THREE.WebGLRenderer({canvas, antialias: true, alpha: true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-  function size(){
-    const w = canvas.parentElement.clientWidth;
-    const h = canvas.parentElement.clientHeight;
-    renderer.setSize(w, h);
-    camera.aspect = w/h;
-    camera.updateProjectionMatrix();
-  }
-  size();
-  window.addEventListener('resize', size);
-
-  const count = 600;
-  const positions = new Float32Array(count * 3);
-  for(let i = 0; i < count; i++){
-    positions[i*3]   = (Math.random() - 0.5) * 14;
-    positions[i*3+1] = (Math.random() - 0.5) * 10;
-    positions[i*3+2] = (Math.random() - 0.5) * 10;
-  }
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  const pmat = new THREE.PointsMaterial({
-    color: 0xff5722,
-    size: 0.04,
-    transparent: true,
-    opacity: 0.7,
-    sizeAttenuation: true
-  });
-  const points = new THREE.Points(geo, pmat);
-  scene.add(points);
-
-  let mx = 0, my = 0;
-  window.addEventListener('mousemove', e=>{
-    mx = (e.clientX / window.innerWidth - 0.5);
-    my = (e.clientY / window.innerHeight - 0.5);
-  });
-
-  const clock = new THREE.Clock();
-  function loop(){
-    requestAnimationFrame(loop);
-    const t = clock.getElapsedTime();
-    points.rotation.y = t * 0.05 + mx * 0.3;
-    points.rotation.x = -my * 0.3;
-    renderer.render(scene, camera);
-  }
-  loop();
-})();
-</script>
-
+  </script>
 </body>
+
 </html>
