@@ -1,0 +1,15 @@
+{
+  "name": "beyond-the-screen",
+  "version": "2.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "start": "node scripts/serve.mjs",
+    "check": "node scripts/check.mjs",
+    "preview:build": "node scripts/standalone.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

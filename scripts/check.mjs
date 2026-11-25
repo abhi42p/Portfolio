@@ -1,0 +1,1 @@
+import{readdirSync}from'node:fs';import{spawnSync}from'node:child_process';for(let f of readdirSync(new URL('../src',import.meta.url)).filter(x=>x.endsWith('.js'))){let r=spawnSync(process.execPath,['--check',new URL('../src/'+f,import.meta.url).pathname],{stdio:'inherit'});if(r.status)process.exit(r.status)}console.log('All source modules passed syntax checks.');
